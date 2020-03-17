@@ -3,8 +3,6 @@ on: [push]
 jobs:
   build:
     name: Go Test
-    using: 'docker'
-    image: 'Dockerfile'
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1

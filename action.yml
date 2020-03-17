@@ -1,0 +1,5 @@
+name: 'Set up'
+description: 'Set up docker'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
