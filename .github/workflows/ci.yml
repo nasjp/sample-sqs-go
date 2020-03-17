@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Go Test
     steps:
-      - name: action step
-        uses: nasjp/sample-sqs-go@master
-
-      - name: Check out code into the Go module directory
+      - name: Check out code
         uses: actions/checkout@v1
+
+      - name: Exec action step
+        uses: ./
 
       - name: Build
         run: go build -v .
