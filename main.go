@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -12,15 +13,19 @@ import (
 var sess = session.Must(session.NewSession())
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "Queue URL required.")
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-
+	os.Exit(0)
 }
 
 func run() error {
-	q := services.Queue{
+	if len(os.Args) < 2 {
+		return errors.New("Queue URL required.")
+	}
+
+	q := &services.Queue{
 		Client: sqs.New(sess),
 		URL:    os.Args[1],
 	}

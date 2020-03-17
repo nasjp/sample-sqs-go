@@ -21,13 +21,15 @@ type Message struct {
 }
 
 func (q *Queue) GetMessages(waitTimeout int64) ([]Message, error) {
-	params := sqs.ReceiveMessageInput{
+	params := &sqs.ReceiveMessageInput{
 		QueueUrl: aws.String(q.URL),
 	}
+
 	if waitTimeout > 0 {
 		params.WaitTimeSeconds = aws.Int64(waitTimeout)
 	}
-	resp, err := q.Client.ReceiveMessage(&params)
+
+	resp, err := q.Client.ReceiveMessage(params)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get messages, %v", err)
 	}
