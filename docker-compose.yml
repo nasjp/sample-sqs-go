@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  queue: &queue
+    image: golang:1.14-alpine3.11
+    build:
+      context: .
+    volumes:
+      - ./:/sample-sqs-go:cached
+      - ./.local/packages:/go/pkg:cached
+    working_dir: /sample-sqs-go
+    command: >
+      sh -c '
+        go build -o queue
+        ./queue
+      '
+  test:
+    <<: *queue
+    command: >
+      sh -c '
+        go test ./...
+      '
